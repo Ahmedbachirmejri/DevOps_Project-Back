@@ -16,13 +16,13 @@ pipeline {
         }
     
 
-        /*stage('Build Backend') {
+        stage('Build Backend') {
             steps {
                 script {
                         sh 'mvn clean'
                 }
             }
-        }*/
+        }
 
        /* stage('Nexus') {
             steps {
@@ -34,7 +34,7 @@ pipeline {
             }
         }*/
 
-        /*stage('Compile Backend') {
+        stage('Compile Backend') {
             steps {
                 script {
                         sh 'chmod +x mvnw'
@@ -42,7 +42,7 @@ pipeline {
                         sh 'mvn install'
                 }
             }
-        }*/
+        }
 
         /*stage('Test Backend') {
             steps {
