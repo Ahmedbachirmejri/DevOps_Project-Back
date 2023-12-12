@@ -87,7 +87,7 @@ pipeline {
      stage("Docker build backend") {
     steps {
         script {
-            dockerImage = docker.build "$registry:$BUILD_NUMBER"
+            dockerImage = docker.build "devops-backend'"
             sh 'docker push ahmedbachir/devops-backend'
         }
     }
