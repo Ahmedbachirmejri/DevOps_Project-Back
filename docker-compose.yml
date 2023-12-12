@@ -1,0 +1,21 @@
+version: "2"
+services:
+  musqldb:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    networks:
+      - bridge
+
+  timesheet-backend:
+    depends_on:
+      - musqldb
+    build: ./
+    ports:
+      - 6868:8082
+    volumes:
+      - .m2:/root/.m2
+networks:
+  bridge:
+    driver: bridge
+
