@@ -6,7 +6,7 @@ FROM openjdk:11
 EXPOSE 8084
 
 # Copy the JAR file into the container at /app
-COPY target/DevOps_Project-1.0.0.jar DevOps_Project.jar
+COPY target/DevOps_Project-1.0.0.jar DevOps_Project-1.0.0.jar
 
 # Specify the command to run the application
-ENTRYPOINT ["java","-jar","DevOps_Project.jar"]
+ENTRYPOINT ["java","-jar","DevOps_Project-1.0.0.jar"]
