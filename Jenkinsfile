@@ -19,9 +19,7 @@ pipeline {
         stage('Build Backend') {
             steps {
                 script {
-                    dir('DevOps_Project-Back') {
                         sh 'mvn clean'
-                    }
                 }
             }
         }
@@ -39,11 +37,9 @@ pipeline {
         stage('Compile Backend') {
             steps {
                 script {
-                    dir('DevOps_Project-Back') {
                         sh 'chmod +x mvnw'
                         sh './mvnw compile'
                         sh 'mvn install'
-                    }
                 }
             }
         }
@@ -99,9 +95,7 @@ pipeline {
 stage("Running Docker Compose") {
     steps {
         script {
-        dir('DevOps_Project-Back') {
         sh 'docker compose up -d'
-    }
 }
     }
 }
