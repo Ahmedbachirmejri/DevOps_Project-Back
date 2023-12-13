@@ -16,7 +16,7 @@ pipeline {
         }
     
 
-        stage('Build Backend') {
+        /*stage('Build Backend') {
             steps {
                 script {
                         sh 'mvn clean'
@@ -61,7 +61,7 @@ pipeline {
     }
 }
 
-        /* stage('Nexus') {
+         stage('Nexus') {
             steps {
                 script {
                     dir('DevOps_Project-Back') {
@@ -69,7 +69,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Test Backend') {
             steps {
@@ -78,9 +78,21 @@ pipeline {
                     
                 }
             }
-        }
+        }*/
 
-        stage("Docker build backend") {
+        stage('Build Frontend Docker') {
+            steps {
+                script {
+                    dir('DevOps_Project_Front') {
+                    deleteDir()
+                        sh 'docker build -t ahmedbachir/devops_front_end .'
+                        sh 'docker push ahmedbachir/devops_front_end:latest'
+                    }
+    }
+    }
+ }
+
+        /*stage("Docker build backend") {
     steps {
         script {
             dockerImage = docker.build "ahmedbachir/devops-backend"
@@ -96,7 +108,7 @@ pipeline {
         sh 'docker compose up -d'
         }
             }
-        }
+        }/*
 
         
 
