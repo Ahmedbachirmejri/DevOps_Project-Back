@@ -87,11 +87,12 @@ pipeline {
      stage("Docker build backend") {
     steps {
         script {
-            dockerImage = docker.build "devops-backend'"
+            dockerImage = docker.build "ahmedbachir/devops-backend"
             sh 'docker push ahmedbachir/devops-backend'
         }
     }
 }
+
 
 stage("Running Docker Compose") {
     steps {
