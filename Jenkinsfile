@@ -36,6 +36,18 @@ pipeline {
             }
         }
 
+        
+        stage('Build Frontend') {
+            steps {
+                script {
+                    dir('DevOps_Project_Front') {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
+                }
+            }
+        }
+
         stage('SonarQube') {
     steps {
         script {
@@ -43,7 +55,7 @@ pipeline {
                     sh 'mvn clean verify sonar:sonar \
                         -Dsonar.projectName="Devops-project-V" \
                         -Dsonar.host.url=http://10.0.2.15:9000 \
-                        -Dsonar.token=squ_95e336dbc2acf1d92765942019b93b2698023afe'
+                        -Dsonar.token=squ_2dadf28dc342ab96e1944d18a199b841d85e6c14'
             }
         }
     }
@@ -86,17 +98,7 @@ pipeline {
             }
         }
 
-        /*
-        stage('Build Frontend') {
-            steps {
-                script {
-                    dir('DevOps_Project_Front') {
-                        sh 'npm install'
-                        sh 'npm run build'
-                    }
-                }
-            }
-        }*/
+        
 
      
 }
