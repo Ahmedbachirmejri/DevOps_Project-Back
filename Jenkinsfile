@@ -24,15 +24,7 @@ pipeline {
             }
         }
 
-       /* stage('Nexus') {
-            steps {
-                script {
-                    dir('DevOps_Project-Back') {
-                         sh "mvn deploy -DskipTests=true"
-                    }
-                }
-            }
-        }*/
+       
 
         stage('Compile Backend') {
             steps {
@@ -44,33 +36,55 @@ pipeline {
             }
         }
 
-        /*stage('Test Backend') {
-            steps {
-                script {
-                    dir('DevOps_Project-Back') {
-                    sh 'mvn test'
-                    }
-                    
-                }
-            }
-        }*/
-
-        /*stage('SonarQube') {
+        stage('SonarQube') {
     steps {
         script {
             withSonarQubeEnv(installationName: 'Sonar_devops') {
-                dir('DevOps_Project-Back') {
                     sh 'mvn clean verify sonar:sonar \
                         -Dsonar.projectName="Devops-project-V" \
                         -Dsonar.host.url=http://10.0.2.15:9000 \
                         -Dsonar.token=squ_95e336dbc2acf1d92765942019b93b2698023afe'
-                }
             }
         }
     }
-}*/
+}
+
+        /* stage('Nexus') {
+            steps {
+                script {
+                    dir('DevOps_Project-Back') {
+                         sh "mvn deploy -DskipTests=true"
+                    }
+                }
+            }
+        }*/
+
+        stage('Test Backend') {
+            steps {
+                script {
+                    sh 'mvn test'
+                    
+                }
+            }
+        }
+
+        stage("Docker build backend") {
+    steps {
+        script {
+            dockerImage = docker.build "ahmedbachir/devops-backend"
+            sh 'docker push ahmedbachir/devops-backend'
+        }
+    }
+}
 
 
+    stage("Running Docker Compose") {
+    steps {
+        script {
+        sh 'docker compose up -d'
+        }
+            }
+        }
 
         /*
         stage('Build Frontend') {
@@ -84,46 +98,6 @@ pipeline {
             }
         }*/
 
-     stage("Docker build backend") {
-    steps {
-        script {
-            dockerImage = docker.build "ahmedbachir/devops-backend"
-            sh 'docker push ahmedbachir/devops-backend'
-        }
-    }
-}
-
-
-stage("Running Docker Compose") {
-    steps {
-        script {
-        sh 'docker compose up -d'
-}
-    }
-}
-/*stage('Build Backend') {
-            steps {
-                
-                        sh 'mvn clean'
-                    }
-                }
-            }
-        }*/
-
-
-
-   /*stage('Push Docker Images to Docker Hub') {
-    steps {
-        script {
-            docker.withRegistry('', registryCredential) {
-                dockerImage.push()
-                sh "docker tag $registry:$BUILD_NUMBER ahmedbachir/devops-backend:latest"
-                sh 'docker push ahmedbachir/devops-backend:latest'
-                sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-        }
-    }
-}*/
-
+     
 }
 }
